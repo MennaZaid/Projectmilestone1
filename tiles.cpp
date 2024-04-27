@@ -2,18 +2,10 @@
 
 Tiles::Tiles()
 {
-    map1land = QPixmap(":/map1/green land.jpg");
-    map1Castle = QPixmap(":/map1/Castle.png");
-    map1fence = QPixmap(":/map1/fence_00.png");
-    map1Canon = QPixmap(":/map1/pngwing.com.png");
-
-    /*fences1["topLeft"] = QPixmap();
-    fences1["topRight"] = QPixmap();
-    fences1["bottomLeft"] = QPixmap();
-    fences1["bottomRight"] = QPixmap();
-    fences1["vertical"] = QPixmap();
-    fences1["horozintal"] = QPixmap();
-    fences1["center"] = QPixmap();*/
+    map1tiles["Castle"] = QPixmap(":/map1/Castle.png");
+    map1tiles["Fence"] = QPixmap(":/map1/fence_00.png");
+    map1tiles["Default"] = QPixmap(":/map1/green land.jpg");
+    map1tiles["Cannon"] = QPixmap(":/map1/pngwing.com.png");
 
     map2land = QPixmap(":/map2/desert land.png");
     map2Castle = QPixmap(":/map2/SandCastle.png");

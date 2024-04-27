@@ -1,5 +1,6 @@
 <RCC>
-    <qresource prefix="/text">
+    <qresource prefix="/text"/>
+    <qresource prefix="/">
         <file>map1.txt</file>
     </qresource>
 </RCC>
