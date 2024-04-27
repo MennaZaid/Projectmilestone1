@@ -11,11 +11,7 @@ class Tiles
 
 public:
     Tiles();
-    void settilemap1();
-    QPixmap map1land;
-    QPixmap map1Castle;
-    QPixmap map1Canon;
-    QPixmap map1fence;
+    QMap<QString, QPixmap> map1tiles;
     QPixmap map2land;
     QPixmap map2Castle;
     QPixmap map2Fence;
@@ -24,10 +20,6 @@ public:
     QPixmap map3Castle;
     QPixmap map3Fence;
     QPixmap map3Canon;
-    QMap<QString, QPixmap> fences1;
-    int index;
-
-
 };
 
 #endif // TILES_H

@@ -1,5 +1,6 @@
-#ifndef MAP1_H
-#define MAP1_H
+
+#ifndef MAP_H
+#define MAP_H
 
 #include <QHash>
 #include "enemy.h"
@@ -10,12 +11,16 @@
 #include "building.h"
 #include "node.h"
 
-class Map1 : public QObject , public Tiles
-{
-public:
-    explicit Map1(QWidget *parent = nullptr);
-    QGraphicsScene* scene;
 
+class MainWindow;
+
+class Map : public QObject
+{
+    Q_OBJECT
+
+public:
+    Map(QWidget *parent);
+    QGraphicsScene* scene;
 private:
     void setupScene();
     void loadmapfromfile(const QString &file);
@@ -25,11 +30,10 @@ private:
     QHash<QPoint, Node*> gridWithoutObstacles;
 
     Building* castle;
-    QList<Building*> otherBuildings;
 
     QList<Enemy*> enemies;
 public slots:
     void giveNewPath();
 };
 
-#endif // MAP1_H
+#endif // MAP_H

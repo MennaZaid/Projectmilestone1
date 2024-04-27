@@ -1,8 +1,6 @@
 #include "maps.h"
+#include "map.h"
 #include "ui_maps.h"
-#include"map1.h"
-#include"map2.h"
-#include"map3.h"
 #include<QMediaplayer>
 #include<QAudioOutput>
 
@@ -36,22 +34,6 @@ void Maps::on_pushButtonmap1_clicked()
 {
     mainWindow->click->play();
     hide();
-    Map1* map1 = new Map1(this->mainWindow);
-}
-
-
-void Maps::on_pushButtonmap2_clicked()
-{
-    mainWindow->click->play();
-    destroy();
-    Map2* map2 = new Map2(this->mainWindow);
-}
-
-
-void Maps::on_pushButtonmap3_clicked()
-{
-    mainWindow->click->play();
-    destroy();
-    Map3* map3 = new Map3(this->mainWindow);
+    Map* map = new Map(this->mainWindow);
 }
 

@@ -14,9 +14,7 @@ SOURCES += \
     enemy.cpp \
     main.cpp \
     mainwindow.cpp \
-    map1.cpp \
-    map2.cpp \
-    map3.cpp \
+    map.cpp \
     maps.cpp \
     node.cpp \
     pathfinder.cpp \
@@ -27,9 +25,7 @@ HEADERS += \
     building.h \
     enemy.h \
     mainwindow.h \
-    map1.h \
-    map2.h \
-    map3.h \
+    map.h \
     maps.h \
     node.h \
     pathfinder.h \

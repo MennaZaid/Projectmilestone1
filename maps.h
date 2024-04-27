@@ -21,9 +21,6 @@ public:
 private slots:
     void on_pushButtonmap1_clicked();
 
-    void on_pushButtonmap2_clicked();
-
-    void on_pushButtonmap3_clicked();
 private:
     MainWindow* mainWindow;
     Ui::Maps *ui;
