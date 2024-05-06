@@ -8,6 +8,7 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include "MyGraphicsPixmapItem.h"
 
 Map::Map(QWidget *parent)
     : QObject(nullptr)
@@ -106,10 +107,12 @@ void Map::loadmapfromfile(const QString &filename)
                 node->building = castle;
                 nodeFake->building = castle;
             } else if (character == '2') {
-                node->isWalkable = false;
+                node->isWalkable = true;
                 Building* cannon = new Building(QPoint(j, i), tilemap1.map1tiles["Cannon"].scaled(pixelWidth, pixelHeight));
                 cannon->setPos(posX, posY);
                 scene->addItem(cannon);
+                MyGraphicsPixmapItem *item = new MyGraphicsPixmapItem(cannon);
+                scene->addItem(item);
                 node->building = cannon;
                 nodeFake->building = cannon;
             } else if (character == '3') {

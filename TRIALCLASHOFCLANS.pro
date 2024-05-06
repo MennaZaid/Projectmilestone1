@@ -10,7 +10,10 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Bullet.cpp \
+    MyGraphicsPixmapItem.cpp \
     building.cpp \
+    citizen.cpp \
     enemy.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -22,7 +25,10 @@ SOURCES += \
     tiles.cpp
 
 HEADERS += \
+    Bullet.h \
+    MyGraphicsPixmapItem.h \
     building.h \
+    citizen.h \
     enemy.h \
     mainwindow.h \
     map.h \

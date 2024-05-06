@@ -15,9 +15,6 @@ class Enemy : public QObject, public QGraphicsPixmapItem
     QList<Node*> currentPath;
     bool isCastlePath = false;
     int currentNodeOnPath = 0;
-
-    ~Enemy();
-
 public:
 
     QPoint coords;

@@ -1,20 +1,15 @@
 #ifndef CITIZEN_H
 #define CITIZEN_H
 
-#include<QGraphicsItem>
-#include<QObject>
-#include<QList>
+#include <QObject>
 
-class Citizen : public QObject, public QGraphicsPixmapItem
+class citizen : public QObject
 {
+    Q_OBJECT
 public:
-    Citizen(QList<QPoint>);
-    QList<QPoint> positions;
-    int currentIndex = 0;
-    int direction = 1;
+    explicit citizen(QObject *parent = nullptr);
 
-public slots:
-    void MoveToNextPostion();
+signals:
 };
 
 #endif // CITIZEN_H

@@ -6,12 +6,6 @@ float dotProduct(QPointF a, QPointF b)
     return a.x() * b.x() + a.y() * b.y();
 }
 
-Enemy::~Enemy()
-{
-    delete currentTimer;
-    delete this;
-}
-
 QPointF lerp(QPointF a, QPointF b, float t)
 {
     return (1-t) * a + t * b;
