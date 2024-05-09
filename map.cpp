@@ -9,6 +9,13 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include "MyGraphicsPixmapItem.h"
+//s
+#include<QApplication>
+#include<QLabel>
+#include<QTimer>
+//e
+
+
 
 Map::Map(QWidget *parent)
     : QObject(nullptr)
@@ -16,6 +23,65 @@ Map::Map(QWidget *parent)
     scene = new QGraphicsScene();
     this->mainWindow = static_cast<MainWindow*>(parent);
     setupScene();
+
+
+    //s
+    m_timer=new Timer();
+    scene->addItem(m_timer);
+
+    QTimer* timer = new QTimer(this);
+    int remainingTime = 5 * 60;
+    connect(timer, &QTimer::timeout, [=]() mutable {
+        m_timer->updateTime(remainingTime);
+        if (remainingTime == 0) {
+            timer->stop();
+            m_timer->updateTime(0);
+        } else {
+            remainingTime--;
+            //s
+            if(remainingTime==0){
+                QMessageBox::information(nullptr, "info", "CONGRATS YOU WON THE GAVE!!");
+            }
+            //e
+        }
+    });
+    timer->start(1000);
+
+
+    //e
+
+
+
+    // //s
+
+    // QLabel label("Time remaining: 5:00", nullptr, Qt::WindowStaysOnTopHint);
+    // label.setAlignment(Qt::AlignCenter);
+    // label.resize(200,100);
+    // label.show();
+    // scene->addItem(label);
+    // //QTimer timer;
+    // int remainingTime=5*60;
+
+    // QObject::connect(&timer,&QTimer::timeout,[&](){
+
+    //     int minutes=remainingTime/60;
+    //     int seconds=remainingTime%60;
+
+    //     QString timestring=QString("%1:%2").arg(minutes,2,10,QChar('0')).arg(seconds,2,10,QChar('0'));
+    //     label.setText("Time remaining: "+timestring);
+
+
+    //     if(remainingTime==0){
+    //         timer.stop();
+    //         //gameover
+    //         label.setText("Time's up!");
+    //     }
+    //     else{
+    //         remainingTime--;
+    //     }
+
+    // });
+    // //e
 }
 
 void Map::giveNewPath()

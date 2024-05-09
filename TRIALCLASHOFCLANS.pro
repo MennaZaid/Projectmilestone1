@@ -12,6 +12,7 @@ CONFIG += c++17
 SOURCES += \
     Bullet.cpp \
     MyGraphicsPixmapItem.cpp \
+    Timer.cpp \
     building.cpp \
     citizen.cpp \
     enemy.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 HEADERS += \
     Bullet.h \
     MyGraphicsPixmapItem.h \
+    Timer.h \
     building.h \
     citizen.h \
     enemy.h \
