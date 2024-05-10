@@ -1,5 +1,6 @@
 #include "citizen.h"
 
-citizen::citizen(QObject *parent)
-    : QObject{parent}
-{}
+citizen::citizen(QPoint coords, QPixmap map) : QObject(nullptr) , QGraphicsPixmapItem(nullptr)
+{
+
+}

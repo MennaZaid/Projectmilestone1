@@ -11,6 +11,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
     void shootBullet();
 private:
+    bool canShoot = true;
     Building *cannon;
 };
 

@@ -5,7 +5,7 @@ Tiles::Tiles()
     map1tiles["Castle"] = QPixmap(":/map1/Castle.png");
     map1tiles["Fence"] = QPixmap(":/map1/fence_00.png");
     map1tiles["Default"] = QPixmap(":/map1/green land.jpg");
-    map1tiles["Cannon"] = QPixmap(":/map1/128-1289270_canon-clipart-gun-cannon-clipart-top-view-hd.png");
+    map1tiles["Cannon"] = QPixmap(":/map1/cannon.jpeg");
 
     map2land = QPixmap(":/map2/desert land.png");
     map2Castle = QPixmap(":/map2/SandCastle.png");

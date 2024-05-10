@@ -2,14 +2,16 @@
 #define CITIZEN_H
 
 #include <QObject>
+#include <QGraphicsPixmapItem>
 
-class citizen : public QObject
+class citizen : public QObject, QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    explicit citizen(QObject *parent = nullptr);
+    explicit citizen(QPoint coords, QPixmap map);
 
-signals:
+public slots:
+
 };
 
 #endif // CITIZEN_H

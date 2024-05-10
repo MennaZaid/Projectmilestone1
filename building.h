@@ -5,7 +5,7 @@
 #include <QPoint>
 #include <QGraphicsPixmapItem>
 
-class Building : public QObject, public QGraphicsPixmapItem
+class Building : public QObject, public QGraphicsPixmapItem, public QGraphicsRectItem
 {
     Q_OBJECT
     int currentHitpoints = 500;

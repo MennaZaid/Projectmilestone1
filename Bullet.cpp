@@ -7,7 +7,7 @@
 
 Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
     // draw graphics
-    setPixmap(QPixmap(":/map1/332-3329390_transparent-cannonball-png-cannon-ball-2d-png-png.png").scaled(25, 25));
+    setPixmap(QPixmap(":/map1/cannon_ball.jpeg").scaled(25, 25));
     QTimer* timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
 

@@ -19,12 +19,6 @@ float inverseLerp(QPointF a, QPointF b, QPointF v)
 
     float nominator = dotProduct(ab, av);
     float denominator = dotProduct(ab, ab);
-    if (nominator != 0)
-    {
-        qDebug() << v;
-        qDebug() << a;
-        qDebug() << b;
-    }
     return (nominator / denominator); // Or you can do it by components (i.e ab.y / av.y
     //  but I like this because it looks more elegant
 }
@@ -40,8 +34,8 @@ void Enemy::processPath(QList<Node*> path)
     currentNodeIndex = 0;
     if (currentNodeIndex != 0) qDebug() << currentNodeIndex;
     currentTimer = new QTimer();
-    moveOnPath();
-
+    connect(currentTimer,SIGNAL(timeout()), this, SLOT(moveOnPath()));
+    currentTimer->start(10);
 }
 
 void Enemy::moveOnPath()

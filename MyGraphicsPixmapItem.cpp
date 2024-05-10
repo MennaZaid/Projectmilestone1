@@ -21,7 +21,7 @@ void MyGraphicsPixmapItem::keyPressEvent(QKeyEvent *event) {
             break;
         case Qt::Key_Space:
             // Shoot bullets
-            shootBullet();
+            if (canShoot) shootBullet();
             break;
         default:
             QGraphicsPixmapItem::keyPressEvent(event);
@@ -34,9 +34,9 @@ void MyGraphicsPixmapItem::shootBullet()
 {
     if (scene() && cannon) {
 
+        canShoot = false;
         Bullet *bullet = new Bullet();
 
-        qreal bulletSpeed = 5.0;
         qreal angleDegrees = cannon->rotation(); // cannon is a QGraphicsItem with rotation
         qreal angleRadians = qDegreesToRadians(angleDegrees);
         qreal bulletVelocityX = qCos(angleRadians);
@@ -49,5 +49,10 @@ void MyGraphicsPixmapItem::shootBullet()
         bullet->setPos(bulletPos);
         bullet->setRotation(angleDegrees + 90);
         scene()->addItem(bullet);
+
+        QEventLoop loop;
+        QTimer::singleShot(500, &loop, &QEventLoop::quit);
+        loop.exec();
+        canShoot = true;
     }
 }
