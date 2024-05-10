@@ -10,6 +10,10 @@
 #include "mainwindow.h"
 #include "building.h"
 #include "node.h"
+//s
+#include<QTimer>
+#include"Timer.h"
+//e
 
 
 class MainWindow;
@@ -31,7 +35,13 @@ private:
     Building* castle;
 
     QList<Enemy*> enemies;
+<<<<<<< HEAD
 
+=======
+    //s
+    Timer* m_timer;
+    //e
+>>>>>>> 66349ea28d5b73fccde6d822cebd221bac304d99
 public slots:
 
     void AddEnemy();
