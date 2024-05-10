@@ -27,13 +27,14 @@ private:
     Tiles tilemap1;
     MainWindow* mainWindow;
     QHash<QPoint, Node*> grid;
-    QHash<QPoint, Node*> gridWithoutObstacles;
 
     Building* castle;
 
     QList<Enemy*> enemies;
+
 public slots:
-    void giveNewPath();
+
+    void AddEnemy();
 };
 
 #endif // MAP_H

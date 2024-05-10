@@ -10,3 +10,5 @@ void Building::TakeDamage()
 {
     this->currentHitpoints--;
 }
+
+

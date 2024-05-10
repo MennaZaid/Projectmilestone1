@@ -13,18 +13,12 @@ class Enemy : public QObject, public QGraphicsPixmapItem
 
     QTimer* currentTimer;
     QList<Node*> currentPath;
-    bool isCastlePath = false;
-    int currentNodeOnPath = 0;
+    int currentNodeIndex = 0;
 public:
-
-    QPoint coords;
     Enemy(QPoint, QPixmap);
 public slots:
-    void DamageBuilding();
-    void processPath(QList<Node*>, bool);
+    void processPath(QList<Node*>);
     void moveOnPath();
-signals:
-    void needNewPath();
 };
 
 

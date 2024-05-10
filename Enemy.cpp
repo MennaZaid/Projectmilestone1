@@ -1,5 +1,6 @@
 #include "enemy.h"
 #include <QMessageBox>
+#include <QGraphicsScene>
 
 float dotProduct(QPointF a, QPointF b)
 {
@@ -18,88 +19,69 @@ float inverseLerp(QPointF a, QPointF b, QPointF v)
 
     float nominator = dotProduct(ab, av);
     float denominator = dotProduct(ab, ab);
-
+    if (nominator != 0)
+    {
+        qDebug() << v;
+        qDebug() << a;
+        qDebug() << b;
+    }
     return (nominator / denominator); // Or you can do it by components (i.e ab.y / av.y
     //  but I like this because it looks more elegant
 }
 
-Enemy::Enemy(QPoint coords, QPixmap pixMap) : QGraphicsPixmapItem(nullptr), QObject(nullptr)
+Enemy::Enemy(QPoint coords, QPixmap pixMap) : QObject(nullptr), QGraphicsPixmapItem(nullptr)
 {
     setPixmap(pixMap);
-    this->coords = coords;
+    setPos(coords * 100);
 }
-void Enemy::processPath(QList<Node*> path, bool isCastlePath)
+void Enemy::processPath(QList<Node*> path)
 {
-    this->currentNodeOnPath = 0;
     this->currentPath = path;
-    this->isCastlePath = isCastlePath;
-
+    currentNodeIndex = 0;
+    if (currentNodeIndex != 0) qDebug() << currentNodeIndex;
     currentTimer = new QTimer();
-    connect(currentTimer, SIGNAL(timeout()), this, SLOT (moveOnPath()));
-    currentTimer->start(15);
-}
+    moveOnPath();
 
-void Enemy::DamageBuilding()
-{
-    Node* node = currentPath.last();
-    node->building->TakeDamage();
-    if (node->building->CurrentHitPoints() < 0)
-    {
-        if (!isCastlePath)
-        {
-            disconnect(currentTimer, SIGNAL(timeout()), this, SLOT(DamageBuilding()));
-            delete currentTimer;
-            delete node->building;
-            emit needNewPath();
-        }
-        else
-        {
-            disconnect(currentTimer, SIGNAL(timeout()), this, SLOT(DamageBuilding()));
-            delete currentTimer;
-            delete node->building;
-            QMessageBox::information(nullptr, "info", "YOU LOST THE GAME!!");
-        }
-    }
 }
 
 void Enemy::moveOnPath()
 {
-    if (currentNodeOnPath == currentPath.count() - 1)
+    Node* currentNode = currentPath[currentNodeIndex];
+
+    //Here we have an obstacle, it will not move foward unless the obstacle is cleared
+    //cannon Node is always unwalkable, meaning it will never be in a path and will be ignored by enemy
+    if (currentNode->building != nullptr)
     {
-        if (!isCastlePath)
+        currentNode->building->TakeDamage();
+        if (currentNode->building->CurrentHitPoints() <= 0)
         {
-            currentNodeOnPath = 0;
-            disconnect(currentTimer, SIGNAL(timeout()), this, SLOT(moveOnPath()));
-            delete currentTimer;
-            currentTimer = new QTimer();
-            connect(currentTimer, SIGNAL(timeout()), this, SLOT(DamageBuilding()));
-            currentTimer->start(1000);
-            return;
+            delete currentNode->building;
+            currentNode->building = nullptr;
         }
-        else
-        {
-            disconnect(currentTimer, SIGNAL(timeout()), this, SLOT(moveOnPath()));
-            delete currentTimer;
-            currentTimer = new QTimer();
-            connect(currentTimer, SIGNAL(timeout()), this, SLOT(DamageBuilding()));
-            currentTimer->start(1000);
-            return;
-        }
+        return;
     }
-    Node* currentNode = currentPath[currentNodeOnPath];
-    Node* nextNode = currentPath[currentNodeOnPath + 1];
 
+    //All paths eventually lead to the castle, they are always the shortest path as well.
+    //So the last node in the path is always the castle
+    if (currentNodeIndex == currentPath.count() - 1)
+    {
+        //If we pass the condition, this that we are at the last node, which is castle, and it also means it is destroyed.
+        disconnect(currentTimer, SIGNAL(timeout()), this, SLOT(moveOnPath()));
+        delete currentTimer;
+        qDebug() << "you lost!";
+        return;
+    }
+
+    Node* nextNode = currentPath[currentNodeIndex + 1];
+
+    //This is needed to find where the enemy is its path between 2 nodes
     float currentValue = inverseLerp(QPointF(currentNode->coords) * 100, QPointF(nextNode->coords) * 100, pos());
-
-
+    //This is the new position, plus a small increment to make it actually move
     QPointF newPoint = lerp(QPointF(currentNode->coords) * 100, QPointF(nextNode->coords) * 100, currentValue + 0.005);
-
     setPos(newPoint);
 
     if (currentValue >= 1)
     {
-        coords = nextNode->coords;
-        currentNodeOnPath++;
+        currentNodeIndex++;
     }
 }
-

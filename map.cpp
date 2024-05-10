@@ -18,29 +18,6 @@ Map::Map(QWidget *parent)
     setupScene();
 }
 
-void Map::giveNewPath()
-{
-    Enemy* enemy = static_cast<Enemy*>(sender());
-    PathFinder path(enemy->coords, castle->coords, gridWithoutObstacles);
-    QList<Node*> obstacles;
-    for (Node* node : path.path)
-    {
-        Node* realNode = grid[node->coords];
-        if (!realNode->isWalkable && realNode->coords != castle->coords && realNode->coords != enemy->coords) obstacles.push_back(node);
-    }
-    if (obstacles.count() == 0)
-    {
-        enemy->processPath(path.path, true);
-    }
-    else
-    {
-        Node* newEnd = obstacles[0];
-        PathFinder newPath(enemy->coords, newEnd->coords, gridWithoutObstacles);
-        enemy->processPath(newPath.path, false);
-    }
-}
-
-
 void Map::setupScene()
 {
     loadmapfromfile(":/map1.txt");
@@ -94,72 +71,49 @@ void Map::loadmapfromfile(const QString &filename)
         for (int j = 0; j < line.length() / 2; j++)
         {
             Node* node = new Node(QPoint(j,i));
-            Node* nodeFake = new Node(QPoint(j, i));
-            nodeFake->isWalkable = true;
+            node->isWalkable = true;
             QChar character = line[j * 2];
             if (character == '0') {
-                node->isWalkable = true;
             } else if (character == '1') {
-                node->isWalkable = false;
                 castle = new Building(QPoint(j, i), tilemap1.map1tiles["Castle"].scaled(pixelWidth, pixelHeight));
                 castle->setPos(posX, posY);
                 scene->addItem(castle);
                 node->building = castle;
-                nodeFake->building = castle;
             } else if (character == '2') {
-                node->isWalkable = true;
                 Building* cannon = new Building(QPoint(j, i), tilemap1.map1tiles["Cannon"].scaled(pixelWidth, pixelHeight));
                 cannon->setPos(posX, posY);
                 scene->addItem(cannon);
                 MyGraphicsPixmapItem *item = new MyGraphicsPixmapItem(cannon);
                 scene->addItem(item);
                 node->building = cannon;
-                nodeFake->building = cannon;
-            } else if (character == '3') {
                 node->isWalkable = false;
+            } else if (character == '3') {
                 Building* fence = new Building(QPoint(j, i), tilemap1.map1tiles["Fence"].scaled(pixelWidth, pixelHeight));
                 fence->setPos(posX, posY);
                 scene->addItem(fence);
                 node->building = fence;
-                nodeFake->building = fence;
             }
             grid[node->coords] = node;
-            gridWithoutObstacles[nodeFake->coords] = nodeFake;
             posX += pixelWidth;
         }
         posX = 0;
         posY += pixelHeight;
     }
-
     file.close();
 
-    Enemy* enemy1 = new Enemy(QPoint(0,0), QPixmap(":/photos/enemy.png").scaled(50,50));
+    QTimer* timer = new QTimer();
+    connect(timer, SIGNAL(timeout()), this, SLOT(AddEnemy()));
+    timer->start(2000);
+}
 
-    scene->addItem(enemy1);
+void Map::AddEnemy()
+{
+    int enemyPosX = rand() % 9;
 
-    enemies.push_back(enemy1);
+    QPoint coords(enemyPosX, 0);
+    Enemy* enemy = new Enemy(coords, QPixmap(":/photos/enemy.png").scaled(50, 50));
+    scene->addItem(enemy);
 
-    for (int i = 0; i < enemies.count(); i++)
-    {
-        Enemy* enemy = enemies[i];
-        PathFinder path(enemy->coords, castle->coords, gridWithoutObstacles);
-        QList<Node*> obstacles;
-        for (Node* node : path.path)
-        {
-            Node* realNode = grid[node->coords];
-            if (!realNode->isWalkable && realNode->coords != castle->coords && realNode->coords != enemy->coords) obstacles.push_back(node);
-        }
-        if (obstacles.count() == 0)
-        {
-            enemy->processPath(path.path, true);
-        }
-        else
-        {
-            Node* newEnd = obstacles[0];
-
-            PathFinder newPath(enemy->coords, newEnd->coords, gridWithoutObstacles);
-            enemy->processPath(newPath.path, false);
-        }
-        QObject::connect(enemy, SIGNAL(needNewPath()), this, SLOT(giveNewPath()));
-    }
+    PathFinder path(coords, castle->coords, grid);
+    enemy->processPath(path.path);
 }

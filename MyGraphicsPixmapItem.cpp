@@ -11,7 +11,6 @@ MyGraphicsPixmapItem::MyGraphicsPixmapItem(Building *cannon, QGraphicsItem *pare
 
 void MyGraphicsPixmapItem::keyPressEvent(QKeyEvent *event) {
     if (cannon) {
-         qDebug() << "Key pressed:" << event->key();
         qreal rotationStep = 5.0;
         switch (event->key()) {
         case Qt::Key_Left:
@@ -36,8 +35,6 @@ void MyGraphicsPixmapItem::shootBullet()
     if (scene() && cannon) {
 
         Bullet *bullet = new Bullet();
-        qDebug() << "space";
-
 
         qreal bulletSpeed = 5.0;
         qreal angleDegrees = cannon->rotation(); // cannon is a QGraphicsItem with rotation
@@ -46,7 +43,8 @@ void MyGraphicsPixmapItem::shootBullet()
         qreal bulletVelocityY =  qSin(angleRadians);
 
         // Calculate the position of the bullet relative to the cannon
-        QPointF bulletPos = cannon->pos() + QPointF(bulletVelocityX, bulletVelocityY) * 10;
+
+        QPointF bulletPos = cannon->pos() + QPointF(cannon->boundingRect().width() / 2, cannon->boundingRect().height() / 2) + QPointF(cannon->boundingRect().width() / 2 * bulletVelocityX, cannon->boundingRect().height() / 2 * bulletVelocityY);
         bullet->setTransformOriginPoint(bullet->boundingRect().width() / 2, bullet->boundingRect().height() / 2);
         bullet->setPos(bulletPos);
         bullet->setRotation(angleDegrees + 90);
