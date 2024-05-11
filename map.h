@@ -34,7 +34,6 @@ private:
 
     Building* castle;
 
-    QList<Enemy*> enemies;
     Timer* m_timer;
 public slots:
 
