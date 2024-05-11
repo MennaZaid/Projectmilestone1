@@ -30,7 +30,7 @@ Map::Map(QWidget *parent)
     // Create a timer for spawning health markers
     healthMarkerTimer = new QTimer(this);
     connect(healthMarkerTimer, SIGNAL(timeout()), this, SLOT(spawnHealthMarker()));
-    healthMarkerTimer->start(1000);
+    healthMarkerTimer->start(10000);
 
     //s
     m_timer = new Timer();
