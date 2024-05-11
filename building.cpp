@@ -5,20 +5,21 @@ Building::Building(QPoint coords, QPixmap map) : QObject(nullptr) , QGraphicsPix
 {
     setPixmap(map);
     this->coords = coords;
-    bar = new HealthBar(100, 10, pos());
 }
 
 void Building::TakeDamage()
 {
     this->currentHitpoints--;
-    this->bar->setValue(currentHitpoints);
-    if (currentHitpoints < 500)
+    emit BuildingDamaged();
+ }
+
+void Building::Heal()
+{
+    this->currentHitpoints++;
+    if (currentHitpoints >= maximumHitpoints)
     {
-        bar->show();
-    }
-    else
-    {
-        bar->hide();
+        qDebug() << "fully healed";
+        emit FullyHealed();
     }
 }
 

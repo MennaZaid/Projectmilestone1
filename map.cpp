@@ -222,6 +222,79 @@ void Map::loadmapfromfile(const QString &filename)
     QTimer* timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(AddEnemy()));
     timer->start(2000);
+
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            Node* node = grid.value(QPoint(i, j));
+            if (node->building != nullptr)
+            {
+                buildings.push_back(node->building);
+                connect(node->building, SIGNAL(BuildingDamaged()), this, SLOT(OnBuildingDamaged()));
+                connect(node->building, SIGNAL(FullyHealed()), this, SLOT(RemoveBuildingFromList()));
+            }
+        }
+    }
+
+    for (int i = -1; i <= 1; i++)
+    {
+        for (int j = -1; j <= 1; j++)
+        {
+            if (i == 0 && j == 0) continue;
+
+            QPoint offset(i, j);
+            QPoint coords = castle->coords + offset;
+            Citizen* citizen = new Citizen(coords, QPixmap(":/photos/citizen.png").scaled(75,50));
+            scene->addItem(citizen);
+            citizens.push_back(citizen);
+            connect(citizen, SIGNAL(Finished()), this, SLOT(ResetCitizen()));
+        }
+    }
+
+}
+
+void Map::ResetCitizen()
+{
+    Citizen* citizen = static_cast<Citizen*>(sender());
+    citizen->busy = false;
+}
+
+void Map::RemoveBuildingFromList()
+{
+    qDebug() << "RemoveBuildingFromList";
+    Building* building = static_cast<Building*>(sender());
+    if (buildingsBeingFixed.contains(building))
+    {
+        for (int i = 0; i < buildingsBeingFixed.count(); i++)
+        {
+            if (buildingsBeingFixed[i] == building)
+            {
+                buildingsBeingFixed.remove(i);
+                return;
+            }
+        }
+    }
+}
+
+void Map::OnBuildingDamaged()
+{
+    qDebug() << "OnBuildingDamaged";
+    Building* building = static_cast<Building*>(sender());
+    if(buildingsBeingFixed.contains(building)) return;
+    for(int i = 0; i < citizens.count(); i++)
+    {
+        Citizen* citizen = citizens[i];
+        if(!citizen->busy)
+        {
+            buildingsBeingFixed.push_back(building);
+            citizen->busy = true;
+            QPoint beginning(citizen->pos().x() / 100, citizen->pos().y() / 100);
+            PathFinder path(beginning, building->coords, grid);
+            citizen->ProcessPath(path.path);
+            return;
+        }
+    }
 }
 
 void Map::AddEnemy()
@@ -235,8 +308,6 @@ void Map::AddEnemy()
     PathFinder path(coords, castle->coords, grid);
     enemy->processPath(path.path);
 }
-
-
 
 void Map::spawnHealthMarker() {
     // Ensure scene is properly initialized and accessible
