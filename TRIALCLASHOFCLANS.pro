@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     Bullet.cpp \
+    HealthMarker.cpp \
     Map1.cpp \
     Map2.cpp \
     MyGraphicsPixmapItem.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
 
 HEADERS += \
     Bullet.h \
+    HealthMarker.h \
     Map1.h \
     Map2.h \
     MyGraphicsPixmapItem.h \

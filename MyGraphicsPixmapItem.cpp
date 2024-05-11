@@ -3,6 +3,7 @@
 #include <QGraphicsScene>
 #include <QDebug>
 #include<QEventLoop>
+#include<QTimer>
 MyGraphicsPixmapItem::MyGraphicsPixmapItem(Building *cannon, QGraphicsItem *parent)
     : QGraphicsPixmapItem(parent), cannon(cannon) {
     setFlags(QGraphicsItem::ItemIsFocusable);

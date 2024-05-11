@@ -22,7 +22,9 @@ Map::Map(QWidget *parent)
     scene = new QGraphicsScene();
     this->mainWindow = static_cast<MainWindow*>(parent);
     setupScene(pixmapArray);
-
+    //added
+    //healthmarker=new HealthMarker;
+    //scene->addItem(healthmarker);
 
 
     m_timer=new Timer();
@@ -147,6 +149,9 @@ void Map::loadmapfromfile(const QString &filename , QPixmap pixmapArray[])
     connect(timer, SIGNAL(timeout()), this, SLOT(AddEnemy()));
     timer->start(2000);
 }
+
+
+
 
 void Map::AddEnemy(QPixmap Pixmap)
 {

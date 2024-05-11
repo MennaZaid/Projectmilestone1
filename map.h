@@ -16,6 +16,7 @@
 #include"tiles.h"
 #include<array>
 #include<QPixmap>
+#include<QTime>
 //e
 
 
@@ -28,6 +29,7 @@ class Map : public QObject
 public:
     Map(QWidget *parent);
     QGraphicsScene* scene;
+
 protected:
     void setupScene(QPixmap pixmapArray[]);
     void loadmapfromfile(const QString &file , QPixmap pixmapArray[]);
@@ -35,6 +37,7 @@ protected:
     QHash<QPoint, Node*> grid;
     Building* castle;
     Timer* m_timer;
+
 
     QPixmap pixmapArray[5];
 
