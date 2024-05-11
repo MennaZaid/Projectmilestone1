@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/Ice">
+        <file>GameBG.png</file>
+        <file>flamethrower.png</file>
+        <file>Wall.png</file>
+        <file>wallvertical.png</file>
+        <file>Snowball.png</file>
+        <file>Iceball.png</file>
+        <file>IceCastle.png</file>
+        <file>Snowman goingright.jpg</file>
+        <file>Snowman going left.jpg</file>
+        <file>SnowmanLight.png</file>
+    </qresource>
+</RCC>

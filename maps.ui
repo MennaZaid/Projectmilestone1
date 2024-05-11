@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -37,16 +37,9 @@
       </property>
      </widget>
     </item>
-    <item>
-     <widget class="QPushButton" name="pushButtonmap3">
-      <property name="text">
-       <string>Map 3</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -65,13 +58,6 @@
     </item>
     <item>
      <widget class="QLabel" name="Map2label">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="Map3label">
       <property name="text">
        <string/>
       </property>

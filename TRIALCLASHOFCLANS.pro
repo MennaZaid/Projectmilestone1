@@ -10,6 +10,8 @@ CONFIG += c++17
 
 SOURCES += \
     Bullet.cpp \
+    Map1.cpp \
+    Map2.cpp \
     MyGraphicsPixmapItem.cpp \
     Timer.cpp \
     building.cpp \
@@ -26,6 +28,8 @@ SOURCES += \
 
 HEADERS += \
     Bullet.h \
+    Map1.h \
+    Map2.h \
     MyGraphicsPixmapItem.h \
     Timer.h \
     building.h \
@@ -50,6 +54,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
+    IceMap.qrc \
     MainWindow.qrc \
     Map1.qrc \
     Map2.qrc \

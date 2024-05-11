@@ -13,6 +13,9 @@
 //s
 #include<QTimer>
 #include"Timer.h"
+#include"tiles.h"
+#include<array>
+#include<QPixmap>
 //e
 
 
@@ -25,19 +28,19 @@ class Map : public QObject
 public:
     Map(QWidget *parent);
     QGraphicsScene* scene;
-private:
-    void setupScene();
-    void loadmapfromfile(const QString &file);
-    Tiles tilemap1;
+protected:
+    void setupScene(QPixmap pixmapArray[]);
+    void loadmapfromfile(const QString &file , QPixmap pixmapArray[]);
     MainWindow* mainWindow;
     QHash<QPoint, Node*> grid;
-
     Building* castle;
-
     Timer* m_timer;
+
+    QPixmap pixmapArray[5];
+
 public slots:
 
-    void AddEnemy();
+    void AddEnemy(QPixmap Pixmap);
 };
 
 #endif // MAP_H
