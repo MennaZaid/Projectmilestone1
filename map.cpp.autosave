@@ -21,7 +21,6 @@
 Map::Map(QWidget *parent)
     : QObject(nullptr)
 {
-    timer=nullptr;
     scene = new QGraphicsScene();
     this->mainWindow = static_cast<MainWindow*>(parent);
     setupScene();
@@ -106,19 +105,19 @@ void Map:: startThenewLevel()
 
 void Map::resetGame() {
     qDebug() << "reset works";
-
+    
     // Clear the scene
     scene->clear();
-
+    
     // Restart the game setup with the updated parameters
     setupScene();
-
+    
     // Stop and delete the previous timer if it exists
     if (timer) {
         timer->stop();
         timer->deleteLater();
     }
-
+    
     // Create a new timer and start it with the new remaining time
     timer = new QTimer(this);
     remainingTime = newRemainingTime;
@@ -252,3 +251,5 @@ void Map::spawnHealthMarker() {
     healthMarker->setPos(x, y);
     scene->addItem(healthMarker);
 }
+
+

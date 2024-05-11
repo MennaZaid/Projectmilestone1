@@ -2,5 +2,6 @@
     <qresource prefix="/photos">
         <file>enemy.png</file>
         <file>playe.png.webp</file>
+        <file>healthmarker.png</file>
     </qresource>
 </RCC>

@@ -11,8 +11,6 @@ CONFIG += c++17
 SOURCES += \
     Bullet.cpp \
     HealthMarker.cpp \
-    Map1.cpp \
-    Map2.cpp \
     MyGraphicsPixmapItem.cpp \
     Timer.cpp \
     building.cpp \
@@ -21,7 +19,6 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     map.cpp \
-    maps.cpp \
     node.cpp \
     pathfinder.cpp \
     settings.cpp \
@@ -30,8 +27,6 @@ SOURCES += \
 HEADERS += \
     Bullet.h \
     HealthMarker.h \
-    Map1.h \
-    Map2.h \
     MyGraphicsPixmapItem.h \
     Timer.h \
     building.h \
@@ -39,7 +34,6 @@ HEADERS += \
     enemy.h \
     mainwindow.h \
     map.h \
-    maps.h \
     node.h \
     pathfinder.h \
     settings.h \
@@ -47,7 +41,6 @@ HEADERS += \
 
 FORMS += \
     mainwindow.ui \
-    maps.ui \
     settings.ui
 
 # Default rules for deployment.
@@ -56,11 +49,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    IceMap.qrc \
     MainWindow.qrc \
     Map1.qrc \
-    Map2.qrc \
-    Map3.qrc \
     Sounds.qrc \
     assets/delete.qrc \
     res.qrc \

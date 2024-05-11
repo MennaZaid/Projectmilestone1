@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QMainWindow>
-#include"maps.h"
+
 #include<QGraphicsScene>
 #include<QGraphicsPixmapItem>
 #include<QPixmap>

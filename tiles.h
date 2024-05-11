@@ -11,16 +11,8 @@ class Tiles
 
 public:
     Tiles();
-    /*QMap<QString, QPixmap> map1tiles;
-    QMap<QString, QPixmap> map2tiles;
-    QPixmap map2land;
-    QPixmap map2Castle;
-    QPixmap map2Fence;
-    QPixmap map2Canon;
-    QPixmap map3land;
-    QPixmap map3Castle;
-    QPixmap map3Fence;
-    QPixmap map3Canon;*/
+    QMap<QString, QPixmap> map1tiles;
+
 };
 
 #endif // TILES_H

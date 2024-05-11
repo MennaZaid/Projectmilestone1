@@ -5,9 +5,10 @@
 #include<QMediaPlayer>
 #include<QAudioOutput>
 #include <QUrl>
-#include"maps.h"
+
 #include"settings.h"
 #include<QDebug>
+#include"map.h"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
@@ -62,8 +63,8 @@ void MainWindow::on_pushButtonStart_clicked()
     backgroundMusic->stop();
     war->play();
     hide();
-    Maps* map= new Maps(this);
-    map->show();
+    Map* map= new Map(this);
+
 }
 
 void MainWindow::setSoundVolume(float value)

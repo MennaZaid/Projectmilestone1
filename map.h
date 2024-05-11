@@ -13,14 +13,19 @@
 //s
 #include<QTimer>
 #include"Timer.h"
-#include"tiles.h"
-#include<array>
-#include<QPixmap>
-#include<QTime>
+#include"HealthMarker.h"
 //e
 
 
 class MainWindow;
+enum Difficulty
+{
+    One,
+    Two,
+    Three,
+    Four,
+    Five
+};
 
 class Map : public QObject
 {
@@ -29,21 +34,32 @@ class Map : public QObject
 public:
     Map(QWidget *parent);
     QGraphicsScene* scene;
+    void setupScene();
+    void loadmapfromfile(const QString &file);
+    void startThenewLevel();
+    void resetGame();
+    void startGameTimer();
 
+    HealthMarker* healthmarker;
+
+    //added
+    QTimer* healthMarkerTimer;
 protected:
-    void setupScene(QPixmap pixmapArray[]);
-    void loadmapfromfile(const QString &file , QPixmap pixmapArray[]);
+    QTimer* timer;
+    int remainingTime;
+    int newRemainingTime;
+    Difficulty currentDifficulty;
+    Tiles tilemap1;
     MainWindow* mainWindow;
     QHash<QPoint, Node*> grid;
     Building* castle;
     Timer* m_timer;
 
-
-    QPixmap pixmapArray[5];
-
 public slots:
-
-    void AddEnemy(QPixmap Pixmap);
+void spawnHealthMarker();
+    void AddEnemy();
 };
 
 #endif // MAP_H
+
+

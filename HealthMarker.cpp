@@ -5,7 +5,7 @@
 #include"Map1.h"
 
 HealthMarker::HealthMarker(QGraphicsItem *parent) : QObject(), QGraphicsPixmapItem(parent) {
-    setPixmap(QPixmap("C:/Users/fatim/OneDrive/Documents/Projectmilestone1/healthmarker.png").scaled(100, 100)); // Set pixmap for the health marker
+    setPixmap(QPixmap(":/photos/healthmarker.png").scaled(100, 100)); // Set pixmap for the health marker
    // scene()->addItem(this);
 }
 
