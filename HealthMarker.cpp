@@ -2,7 +2,6 @@
 #include <QList>
 #include "Bullet.h" // Include the Bullet class header file
 #include<QGraphicsScene>
-#include"Map1.h"
 
 HealthMarker::HealthMarker(QGraphicsItem *parent) : QObject(), QGraphicsPixmapItem(parent) {
     setPixmap(QPixmap(":/photos/healthmarker.png").scaled(100, 100)); // Set pixmap for the health marker

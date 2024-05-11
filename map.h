@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 #include "building.h"
 #include "node.h"
+#include "citizen.h"
 //s
 #include<QTimer>
 #include"Timer.h"
@@ -40,11 +41,16 @@ public:
     void resetGame();
     void startGameTimer();
 
-    HealthMarker* healthmarker;
+public slots:
+    void OnBuildingDamaged();
+    void AddEnemy();
+    void ResetCitizen();
+    void RemoveBuildingFromList();
+    void spawnHealthMarker();
 
     //added
+private:
     QTimer* healthMarkerTimer;
-protected:
     QTimer* timer;
     int remainingTime;
     int newRemainingTime;
@@ -54,10 +60,9 @@ protected:
     QHash<QPoint, Node*> grid;
     Building* castle;
     Timer* m_timer;
-
-public slots:
-void spawnHealthMarker();
-    void AddEnemy();
+    QList<Building*> buildings;
+    QList<Building*> buildingsBeingFixed;
+    QList<Citizen*> citizens;
 };
 
 #endif // MAP_H
