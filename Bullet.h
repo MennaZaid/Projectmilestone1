@@ -19,7 +19,7 @@ public slots:
 private:
     QTimer *sizeIncreaseTimer;
     int bulletSize;
-    static bool shouldIncreaseSize; // Static boolean variable to track if bullet size should be increased
+    static bool shouldIncreaseSize;
 signals:
     void hitEnemy(Enemy* enemy);
 

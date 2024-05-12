@@ -1,0 +1,33 @@
+#include"HealthBar.h"
+#include<QString>
+#include"map.h"
+
+extern Map* m;
+
+
+HealthBar::HealthBar(){
+    health=100;
+    setPlainText("Health:\n"+QString::number(health));
+    setDefaultTextColor(Qt::black);
+    setFont(QFont("times",14));
+}
+void HealthBar::decrement(){
+    health -= 5;
+    setPlainText("Health:\n" + QString::number(health));
+}
+void HealthBa::increment(int add)
+{
+    health +=add;
+    setPlainText("Health:\n" + QString::number(health));
+}
+
+int healthbar::gethp()
+{
+    return health;
+}
+
+void healthbar::hprestart()
+{
+    health = 100;
+    setPlainText("Health:\n" + QString::number(health));
+}

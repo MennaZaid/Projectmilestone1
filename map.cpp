@@ -28,16 +28,15 @@ Map::Map(QWidget *parent)
 
 
 
-    // Create a timer for spawning health markers
     healthMarkerTimer = new QTimer(this);
     connect(healthMarkerTimer, SIGNAL(timeout()), this, SLOT(spawnHealthMarker()));
-    healthMarkerTimer->start(1000);
+    healthMarkerTimer->start(5000);
 
 
     enemySpawnTimer = new QTimer(this);
     connect(enemySpawnTimer, SIGNAL(timeout()), this, SLOT(AddEnemy()));
 
-    //s
+
     m_timer = new Timer();
     scene->addItem(m_timer);
 
@@ -55,7 +54,7 @@ Map::Map(QWidget *parent)
             remainingTime--;
         }
     });
-    timer->start(1000); // Start the timer with a 1-second interval
+    timer->start(1000);
 }
 Map::~Map()
 {
@@ -151,13 +150,12 @@ void Map::resetGame(int newRemainingTime) {
             remainingTime--;
         }
     });
-    timer->start(1000); // Start the timer with a 1-second interval
+    timer->start(1000);
 
 
 
 
 
-    // Create a new timer and start it with the new remaining time
 
 }
 
@@ -337,15 +335,12 @@ void Map::AddEnemy()
 }
 
 void Map::spawnHealthMarker() {
-    // Ensure scene is properly initialized and accessible
     qDebug() << "working";
     if (!scene) return;
 
-    // Generate random coordinates within the scene bounds
     int x = rand() % static_cast<int>(scene->width());
     int y = rand() % static_cast<int>(scene->height());
 
-    // Create and add health marker to the scene
     HealthMarker *healthMarker = new HealthMarker();
     healthMarker->setPos(x, y);
     scene->addItem(healthMarker);

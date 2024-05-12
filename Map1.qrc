@@ -7,5 +7,7 @@
         <file>fence_02.png</file>
         <file>cannon.jpeg</file>
         <file>cannon_ball.jpeg</file>
+        <file>bullet.png</file>
+        <file>canon.png</file>
     </qresource>
 </RCC>

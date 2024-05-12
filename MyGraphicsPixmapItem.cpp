@@ -11,13 +11,11 @@ MyGraphicsPixmapItem::MyGraphicsPixmapItem(Building *cannon, QGraphicsItem *pare
     cannon->setTransformOriginPoint(cannon->boundingRect().width() / 2, cannon->boundingRect().height() / 2);
 
 }
-// In the MyGraphicsPixmapItem class definition or implementation file
 void MyGraphicsPixmapItem::setPos(qreal x, qreal y) {
-    QGraphicsPixmapItem::setPos(x, y); // Call the base class implementation
+    QGraphicsPixmapItem::setPos(x, y);
 }
-// In the MyGraphicsPixmapItem class definition or implementation file
 void MyGraphicsPixmapItem::setRotation(qreal angle) {
-    QGraphicsPixmapItem::setRotation(angle); // Call the base class implementation
+    QGraphicsPixmapItem::setRotation(angle);
 }
 
 void MyGraphicsPixmapItem::keyPressEvent(QKeyEvent *event) {
@@ -31,7 +29,7 @@ void MyGraphicsPixmapItem::keyPressEvent(QKeyEvent *event) {
             cannon->setRotation(cannon->rotation() + rotationStep);
             break;
         case Qt::Key_Space:
-            // Shoot bullets
+
             if (canShoot) shootBullet();
             break;
         default:
@@ -48,12 +46,12 @@ void MyGraphicsPixmapItem::shootBullet()
         canShoot = false;
         Bullet *bullet = new Bullet();
 
-        qreal angleDegrees = cannon->rotation(); // cannon is a QGraphicsItem with rotation
+        qreal angleDegrees = cannon->rotation();
         qreal angleRadians = qDegreesToRadians(angleDegrees);
         qreal bulletVelocityX = qCos(angleRadians);
         qreal bulletVelocityY =  qSin(angleRadians);
 
-        // Calculate the position of the bullet relative to the cannon
+
 
         QPointF bulletPos = cannon->pos() + QPointF(cannon->boundingRect().width() / 2, cannon->boundingRect().height() / 2) + QPointF(cannon->boundingRect().width() / 2 * bulletVelocityX, cannon->boundingRect().height() / 2 * bulletVelocityY);
         bullet->setTransformOriginPoint(bullet->boundingRect().width() / 2, bullet->boundingRect().height() / 2);
