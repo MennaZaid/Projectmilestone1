@@ -42,7 +42,7 @@ Map::Map(QWidget *parent)
     scene->addItem(m_timer);
 
     QTimer* timer = new QTimer(this);
-    int remainingTime = 5 * 10;
+    int remainingTime = 5 * 5;
     connect(timer, &QTimer::timeout, [=]() mutable {
         m_timer->updateTime(remainingTime);
         if (remainingTime == 0) {
@@ -50,7 +50,7 @@ Map::Map(QWidget *parent)
             m_timer->updateTime(0);
             currentDifficulty=One;
             startThenewLevel();
-            QMessageBox::information(nullptr, "info", "CONGRATS YOU WON THE GAME!!");
+
         } else {
             remainingTime--;
         }
@@ -91,10 +91,10 @@ void Map:: startThenewLevel()
     switch (currentDifficulty)
     {
     case One:
-        newRemainingTime = 5 * 1;
+        newRemainingTime = 5 * 5;
         break;
     case Two:
-        newRemainingTime = 5 * 2;
+        newRemainingTime = 5 * 7;
         QMessageBox::information(nullptr, "info", "You're staying longer this time");
         break;
     case Three:
@@ -104,12 +104,12 @@ void Map:: startThenewLevel()
         break;
     case Four:
         numCitizens=2;
-        newRemainingTime=20;
+        newRemainingTime=35;
         QMessageBox::information(nullptr, "info", "You Have less help now");
         break;
     case Five:
-        newRemainingTime = 25;
-        QMessageBox::information(nullptr, "info", "You're staying longer this time");
+        newRemainingTime = 40;
+       QMessageBox::information(nullptr, "info", "CONGRATS YOU WON THE GAME!!");
         scene->clear();
         break;
 
@@ -119,19 +119,26 @@ void Map:: startThenewLevel()
     resetGame(newRemainingTime);
     enemySpawnTimer->setInterval(enemySpawnInterval);
     enemySpawnTimer->start();
-    createCitizens(numCitizens);
+    //createCitizens(numCitizens);
 }
 
 void Map::resetGame(int newRemainingTime) {
 
     qDebug() << "reset works";
 
+    loadmapfromfile(":/map1.txt");
+    QGraphicsView* view = new QGraphicsView(scene);
+    view->setFixedSize(scene->width(), scene->height());
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    view->show();
 
     m_timer = new Timer();
     scene->addItem(m_timer);
 
     QTimer* timer = new QTimer(this);
-
+    remainingTime=newRemainingTime;
     connect(timer, &QTimer::timeout, [=]() mutable {
         m_timer->updateTime(remainingTime);
         if (remainingTime == 0) {
@@ -147,13 +154,7 @@ void Map::resetGame(int newRemainingTime) {
     timer->start(1000); // Start the timer with a 1-second interval
 
 
-    loadmapfromfile(":/map1.txt");
-    QGraphicsView* view = new QGraphicsView(scene);
-    view->setFixedSize(scene->width(), scene->height());
-    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    view->show();
 
 
     // Create a new timer and start it with the new remaining time
@@ -350,7 +351,7 @@ void Map::spawnHealthMarker() {
     scene->addItem(healthMarker);
 }
 
-void Map::createCitizens(int numCitizens)
+/*void Map::createCitizens(int numCitizens)
 {
     // Remove existing citizens
     qDeleteAll(citizens);
@@ -375,7 +376,7 @@ void Map::createCitizens(int numCitizens)
         }
     }
 
-    /*// Remove existing citizens
+    /// Remove existing citizens
     for (Citizen* citizen : citizens) {
         scene->removeItem(citizen);
         delete citizen;
@@ -399,5 +400,5 @@ void Map::createCitizens(int numCitizens)
                 connect(citizen, SIGNAL(Finished()), this, SLOT(ResetCitizen()));
             }
         }
-    }*/
-}
+    }
+}*/

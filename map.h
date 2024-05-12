@@ -14,6 +14,7 @@
 #include<QTimer>
 #include"Timer.h"
 #include"HealthMarker.h"
+#include"MyGraphicsPixmapItem.h"
 //e
 
 
@@ -47,7 +48,7 @@ public slots:
     void ResetCitizen();
     void RemoveBuildingFromList();
     void spawnHealthMarker();
-    void createCitizens(int numCitizens);
+    //void createCitizens(int numCitizens);
 
     //added
 private:
@@ -65,6 +66,7 @@ private:
     QList<Building*> buildingsBeingFixed;
     QList<Citizen*> citizens;
     QTimer* enemySpawnTimer;
+
 };
 
 #endif // MAP_H

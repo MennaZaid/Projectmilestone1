@@ -10,6 +10,8 @@ public:
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     void shootBullet();
+    void setPos(qreal x, qreal y);
+    void setRotation(qreal angle);
 private:
     bool canShoot = true;
     Building *cannon;

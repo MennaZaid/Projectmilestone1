@@ -9,6 +9,15 @@ MyGraphicsPixmapItem::MyGraphicsPixmapItem(Building *cannon, QGraphicsItem *pare
     setFlags(QGraphicsItem::ItemIsFocusable);
     setFocus();
     cannon->setTransformOriginPoint(cannon->boundingRect().width() / 2, cannon->boundingRect().height() / 2);
+
+}
+// In the MyGraphicsPixmapItem class definition or implementation file
+void MyGraphicsPixmapItem::setPos(qreal x, qreal y) {
+    QGraphicsPixmapItem::setPos(x, y); // Call the base class implementation
+}
+// In the MyGraphicsPixmapItem class definition or implementation file
+void MyGraphicsPixmapItem::setRotation(qreal angle) {
+    QGraphicsPixmapItem::setRotation(angle); // Call the base class implementation
 }
 
 void MyGraphicsPixmapItem::keyPressEvent(QKeyEvent *event) {
