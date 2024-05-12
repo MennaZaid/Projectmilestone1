@@ -1,4 +1,3 @@
-
 #ifndef MAP_H
 #define MAP_H
 
@@ -34,12 +33,13 @@ class Map : public QObject
 
 public:
     Map(QWidget *parent);
+    ~Map();
     QGraphicsScene* scene;
     void setupScene();
     void loadmapfromfile(const QString &file);
     void startThenewLevel();
-    void resetGame();
-    void startGameTimer();
+    void resetGame(int newRemainingTime);
+    //void startGameTimer();
 
 public slots:
     void OnBuildingDamaged();
@@ -47,6 +47,7 @@ public slots:
     void ResetCitizen();
     void RemoveBuildingFromList();
     void spawnHealthMarker();
+    void createCitizens(int numCitizens);
 
     //added
 private:
@@ -63,8 +64,8 @@ private:
     QList<Building*> buildings;
     QList<Building*> buildingsBeingFixed;
     QList<Citizen*> citizens;
+    QTimer* enemySpawnTimer;
 };
 
 #endif // MAP_H
-
 

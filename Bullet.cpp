@@ -43,6 +43,7 @@ void Bullet::move(){
 
             scene()->removeItem(colliding_items[i]);
             scene()->removeItem(this);
+            emit hitEnemy(static_cast<Enemy*>(colliding_items[i]));
             // delete them from the heap to save memory
             delete colliding_items[i];
             delete this;

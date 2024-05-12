@@ -25,12 +25,17 @@ Map::Map(QWidget *parent)
     scene = new QGraphicsScene();
     this->mainWindow = static_cast<MainWindow*>(parent);
     setupScene();
-    srand(static_cast<uint>(QTime::currentTime().msec()));
+
+
 
     // Create a timer for spawning health markers
     healthMarkerTimer = new QTimer(this);
     connect(healthMarkerTimer, SIGNAL(timeout()), this, SLOT(spawnHealthMarker()));
-    healthMarkerTimer->start(10000);
+    healthMarkerTimer->start(1000);
+
+
+    enemySpawnTimer = new QTimer(this);
+    connect(enemySpawnTimer, SIGNAL(timeout()), this, SLOT(AddEnemy()));
 
     //s
     m_timer = new Timer();
@@ -43,6 +48,7 @@ Map::Map(QWidget *parent)
         if (remainingTime == 0) {
             timer->stop();
             m_timer->updateTime(0);
+            currentDifficulty=One;
             startThenewLevel();
             QMessageBox::information(nullptr, "info", "CONGRATS YOU WON THE GAME!!");
         } else {
@@ -50,14 +56,17 @@ Map::Map(QWidget *parent)
         }
     });
     timer->start(1000); // Start the timer with a 1-second interval
-
-
-
+}
+Map::~Map()
+{
+    Map* map = new Map(nullptr);
+    delete map;
 
 }
 
 void Map:: startThenewLevel()
 {
+
     qDebug () <<"start the newlevel works";
     switch (currentDifficulty)
     {
@@ -76,64 +85,81 @@ void Map:: startThenewLevel()
 
     }
     qDebug()<<"current Difficulty Level " << currentDifficulty;
-    int newRemainingTime = 0;
+    int newRemainingTime;
+    int enemySpawnInterval=2000;
+    int numCitizens=3;
     switch (currentDifficulty)
     {
     case One:
-        newRemainingTime = 5 * 10;
+        newRemainingTime = 5 * 1;
         break;
     case Two:
         newRemainingTime = 5 * 2;
         QMessageBox::information(nullptr, "info", "You're staying longer this time");
         break;
     case Three:
-        newRemainingTime = 5 * 3;
-        QMessageBox::information(nullptr, "info", "You're staying longer this time");
+        enemySpawnInterval=1000;
+        newRemainingTime=15;
+        QMessageBox::information(nullptr, "info", "Take Care You Have Lots Of Enemies");
         break;
     case Four:
-        newRemainingTime = 5 * 4;
-        QMessageBox::information(nullptr, "info", "You're staying longer this time");
+        numCitizens=2;
+        newRemainingTime=20;
+        QMessageBox::information(nullptr, "info", "You Have less help now");
         break;
     case Five:
-        newRemainingTime = 5 * 5;
+        newRemainingTime = 25;
         QMessageBox::information(nullptr, "info", "You're staying longer this time");
+        scene->clear();
         break;
+
     }
     qDebug()<<newRemainingTime;
     // Reset the game with the updated difficulty level
-    resetGame();
+    resetGame(newRemainingTime);
+    enemySpawnTimer->setInterval(enemySpawnInterval);
+    enemySpawnTimer->start();
+    createCitizens(numCitizens);
 }
 
-void Map::resetGame() {
+void Map::resetGame(int newRemainingTime) {
+
     qDebug() << "reset works";
 
-    // Clear the scene
-    scene->clear();
 
-    // Restart the game setup with the updated parameters
-    setupScene();
+    m_timer = new Timer();
+    scene->addItem(m_timer);
 
-    // Stop and delete the previous timer if it exists
-    if (timer) {
-        timer->stop();
-        timer->deleteLater();
-    }
+    QTimer* timer = new QTimer(this);
 
-    // Create a new timer and start it with the new remaining time
-    timer = new QTimer(this);
-    remainingTime = newRemainingTime;
     connect(timer, &QTimer::timeout, [=]() mutable {
         m_timer->updateTime(remainingTime);
         if (remainingTime == 0) {
             timer->stop();
             m_timer->updateTime(0);
+
             startThenewLevel();
+
         } else {
             remainingTime--;
         }
     });
-    timer->start(1000);
+    timer->start(1000); // Start the timer with a 1-second interval
+
+
+    loadmapfromfile(":/map1.txt");
+    QGraphicsView* view = new QGraphicsView(scene);
+    view->setFixedSize(scene->width(), scene->height());
+    view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    view->show();
+
+
+    // Create a new timer and start it with the new remaining time
+
 }
+
 
 
 void Map::setupScene()
@@ -167,11 +193,11 @@ void Map::loadmapfromfile(const QString &filename)
     QList<QString> lines;
 
     while (!in.atEnd()) {
-        Tiles tilemap1;
+
         lines.append(in.readLine());
     }
 
-
+    Tiles tilemap1;
     for (int i = 0; i < lines.count(); i++)
     {
         QString line = lines[i];
@@ -322,4 +348,56 @@ void Map::spawnHealthMarker() {
     HealthMarker *healthMarker = new HealthMarker();
     healthMarker->setPos(x, y);
     scene->addItem(healthMarker);
+}
+
+void Map::createCitizens(int numCitizens)
+{
+    // Remove existing citizens
+    qDeleteAll(citizens);
+    citizens.clear();
+
+    // Add new citizens
+    for (int i = -1; i <= 1; i++)
+    {
+        for (int j = -1; j <= 1; j++)
+        {
+            if (i == 0 && j == 0) continue;
+
+            QPoint offset(i, j);
+            QPoint coords = castle->coords + offset;
+
+            for (int k = 0; k < numCitizens; ++k) {
+                Citizen* citizen = new Citizen(coords, QPixmap(":/photos/citizen.png").scaled(75,50));
+                scene->addItem(citizen);
+                citizens.push_back(citizen);
+                connect(citizen, SIGNAL(Finished()), this, SLOT(ResetCitizen()));
+            }
+        }
+    }
+
+    /*// Remove existing citizens
+    for (Citizen* citizen : citizens) {
+        scene->removeItem(citizen);
+        delete citizen;
+    }
+    citizens.clear();
+
+    // Add new citizens
+    for (int i = -1; i <= 1; i++)
+    {
+        for (int j = -1; j <= 1; j++)
+        {
+            if (i == 0 && j == 0) continue;
+
+            QPoint offset(i, j);
+            QPoint coords = castle->coords + offset;
+
+            for (int k = 0; k < numCitizens; ++k) {
+                Citizen* citizen = new Citizen(coords, QPixmap(":/photos/citizen.png").scaled(75,50));
+                scene->addItem(citizen);
+                citizens.push_back(citizen);
+                connect(citizen, SIGNAL(Finished()), this, SLOT(ResetCitizen()));
+            }
+        }
+    }*/
 }

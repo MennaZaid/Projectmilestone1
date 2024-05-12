@@ -1,6 +1,6 @@
 #ifndef BULLET_H
 #define BULLET_H
-
+#include"Enemy.h"
 #include <QObject>
 #include <QGraphicsPixmapItem>
 
@@ -20,6 +20,10 @@ private:
     QTimer *sizeIncreaseTimer;
     int bulletSize;
     static bool shouldIncreaseSize; // Static boolean variable to track if bullet size should be increased
+signals:
+    void hitEnemy(Enemy* enemy);
+
 };
+
 
 #endif // BULLET_H
