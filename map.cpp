@@ -30,7 +30,7 @@ Map::Map(QWidget *parent)
 
     healthMarkerTimer = new QTimer(this);
     connect(healthMarkerTimer, SIGNAL(timeout()), this, SLOT(spawnHealthMarker()));
-    healthMarkerTimer->start(5000);
+    healthMarkerTimer->start(10000);
 
 
     enemySpawnTimer = new QTimer(this);
@@ -41,7 +41,7 @@ Map::Map(QWidget *parent)
     scene->addItem(m_timer);
 
     QTimer* timer = new QTimer(this);
-    int remainingTime = 5 * 5;
+    int remainingTime = 50; //change
     connect(timer, &QTimer::timeout, [=]() mutable {
         m_timer->updateTime(remainingTime);
         if (remainingTime == 0) {
@@ -94,7 +94,7 @@ void Map:: startThenewLevel()
         break;
     case Two:
         newRemainingTime = 5 * 7;
-        QMessageBox::information(nullptr, "info", "You're staying longer this time");
+        QMessageBox::information(nullptr, "info", "You Have less help now");//change
         break;
     case Three:
         enemySpawnInterval=1000;
@@ -246,7 +246,7 @@ void Map::loadmapfromfile(const QString &filename)
 
     QTimer* timer = new QTimer();
     connect(timer, SIGNAL(timeout()), this, SLOT(AddEnemy()));
-    timer->start(2000);
+    timer->start(1000); //change
 
     for (int i = 0; i < 9; i++)
     {
@@ -262,9 +262,9 @@ void Map::loadmapfromfile(const QString &filename)
         }
     }
 
-    for (int i = -1; i <= 1; i++)
+    for (int i = -1; i <= 0; i++)//change
     {
-        for (int j = -1; j <= 1; j++)
+        for (int j = -1; j <= 0; j++)//change
         {
             if (i == 0 && j == 0) continue;
 

@@ -10,7 +10,7 @@ bool Bullet::shouldIncreaseSize = false;
 Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
 
     bulletSize = 1;
-    setPixmap(QPixmap(":/map1/bullet.png").scaled(25 * bulletSize, 25 * bulletSize));
+    setPixmap(QPixmap(":/map1/bullet.png").scaled(10 * bulletSize, 10 * bulletSize));//change
     QTimer* timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(move()));
 
@@ -23,10 +23,10 @@ Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent){
 void Bullet::move(){
     if(shouldIncreaseSize){
         bulletSize = 2;
-        setPixmap(QPixmap(":/map1/bullet.png").scaled(25 * bulletSize, 25 * bulletSize));
+        setPixmap(QPixmap(":/map1/bullet.png").scaled(10 * bulletSize, 10 * bulletSize));
     } else {
         bulletSize = 1;
-        setPixmap(QPixmap(":/map1/bullet.png").scaled(25 * bulletSize, 25 * bulletSize));
+        setPixmap(QPixmap(":/map1/bullet.png").scaled(10 * bulletSize, 10 * bulletSize));
     }
 
     QList<QGraphicsItem *> colliding_items = collidingItems();
@@ -73,7 +73,7 @@ void Bullet::decreaseSize(){
     sizeIncreaseTimer->stop();
 
     bulletSize = 1;
-    setPixmap(QPixmap(":/map1/bullet.png").scaled(25 * bulletSize, 25 * bulletSize));
+    setPixmap(QPixmap(":/map1/bullet.png").scaled(10 * bulletSize, 10 * bulletSize));
 
     shouldIncreaseSize = false;
 }

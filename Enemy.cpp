@@ -63,6 +63,8 @@ void Enemy::moveOnPath()
         disconnect(currentTimer, SIGNAL(timeout()), this, SLOT(moveOnPath()));
         delete currentTimer;
         qDebug() << "you lost!";
+        QMessageBox::information(nullptr, "info", "YOU LOST THE GAME!!");
+        exit(0);
         return;
     }
 
@@ -77,5 +79,28 @@ void Enemy::moveOnPath()
     if (currentValue >= 1)
     {
         currentNodeIndex++;
+    }
+}
+
+void Enemy::DamageBuilding()
+{
+    Node* node = currentPath.last();
+    node->building->TakeDamage();
+    if (node->building->CurrentHitPoints() < 0)
+    {
+        if (!isCastlePath)
+        {
+            disconnect(currentTimer, SIGNAL(timeout()), this, SLOT(DamageBuilding()));
+            delete currentTimer;
+            delete node->building;
+            emit needNewPath();
+        }
+        else
+        {
+            disconnect(currentTimer, SIGNAL(timeout()), this, SLOT(DamageBuilding()));
+            delete currentTimer;
+            delete node->building;
+            QMessageBox::information(nullptr, "info", "YOU LOST THE GAME!!");
+        }
     }
 }
